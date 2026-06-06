@@ -360,7 +360,6 @@
             font-weight: 600;
         }
 
-        /* API Key secure box layout */
         .api-key-container {
             width: 100%;
             display: flex;
@@ -638,6 +637,10 @@
     </footer>
 
     <script>
+        // Track context memory for the execution interceptor
+        let lastSuggestedCourses = [];
+        let totalCreditsAdded = 9;
+
         function toggleAIPanel() {
             document.getElementById('aiPanel').classList.toggle('open');
         }
@@ -648,7 +651,52 @@
             }
         }
 
-        // CONNECTS DIRECTLY TO OPENAI FROM BROWSER THREAD SECURELY
+        // PHYSICAL INJECTION INTERCEPTOR LOOP
+        function checkAndExecuteVisualCard(userInputText) {
+            const inputClean = userInputText.toLowerCase();
+            
+            // Look for affirmative words alongside known target course codes
+            if (inputClean.includes('add') || inputClean.includes('yes') || inputClean.includes('sure') || inputClean.includes('ok')) {
+                let courseToInject = "";
+                let titleDesc = "";
+
+                // Look at what electives were tracked in context memory
+                if (lastSuggestedCourses.includes("GESU 121") || inputClean.includes("gesu") || inputClean.includes("121")) {
+                    courseToInject = "GESU 121";
+                    titleDesc = "Sustainability (3.0 cr)";
+                } else if (lastSuggestedCourses.includes("HUMN 102") || inputClean.includes("humn") || inputClean.includes("102")) {
+                    courseToInject = "HUMN 102";
+                    titleDesc = "Humanities (3.0 cr)";
+                } else if (lastSuggestedCourses.includes("ARB 101") || inputClean.includes("arb") || inputClean.includes("101")) {
+                    courseToInject = "ARB 101";
+                    titleDesc = "Arabic Language (3.0 cr)";
+                }
+
+                if (courseToInject) {
+                    const fallColumn = document.getElementById('fall2026Column');
+                    
+                    // Check if it's already rendered to prevent duplicates
+                    const existingCards = Array.from(fallColumn.querySelectorAll('.course-code')).map(c => c.innerText.trim());
+                    if (existingCards.includes(courseToInject)) return false;
+
+                    const newCourseCard = document.createElement('div');
+                    newCourseCard.className = 'course-card new-addition-effect';
+                    newCourseCard.innerHTML = `
+                        <div class="course-code">${courseToInject}</div>
+                        <div class="course-credits">${titleDesc}</div>
+                        <span class="badge badge-on-track" style="background-color: var(--status-green-bg); color: var(--status-green);">AI Appended</span>
+                    `;
+                    fallColumn.appendChild(newCourseCard);
+
+                    // Re-render display counter
+                    totalCreditsAdded += 3;
+                    document.getElementById('fallCreditsText').innerText = `Credits: ${totalCreditsAdded}`;
+                    return courseToInject;
+                }
+            }
+            return false;
+        }
+
         async function handleLiveSend() {
             const input = document.getElementById('userInput');
             const userText = input.value.trim();
@@ -659,7 +707,6 @@
             appendMessage(userText, 'user');
             input.value = '';
 
-            // Fallback rule if no API key is specified yet during presentation
             if (!apiKey) {
                 setTimeout(() => {
                     appendMessage("⚠️ Please enter a valid OpenAI API key in the top input box to initialize streaming logic.", "bot");
@@ -667,10 +714,13 @@
                 return;
             }
 
+            // Execute frontend visual changes immediately if the text matches
+            const successfullyAdded = checkAndExecuteVisualCard(userText);
+
             appendMessage("⏳ Thinking...", "bot", "loadingMsg");
 
-            // STRUCTURAL CATALOG CONTEXT MATRIX EMBED
-            const systemPrompt = `You are an intelligent UAEU Academic Advisor system inside Degree Works. 
+            // STRUCTURAL SYSTEM PROMPT CONTEXT TUNING
+            let systemPrompt = `You are an intelligent UAEU Academic Advisor inside Degree Works. 
             The student is Salem Ahmed, majoring in Bachelor of Science in Mechanical Engineering (132 credits model framework).
             Current terms status:
             - Fall 2025 (Completed: GEAE 101, MATH 130, PHYS 105)
@@ -678,7 +728,12 @@
             - Summer 2026 (In progress: GEIE 222)
             - Fall 2026 (Planned courses: CHEM 111, PETE 305, MATH 140)
             
-            Provide short, helpful academic guidance. If they want to add a light or elective course for Fall 2026, suggest GESU 121, HUMN 102, or ARB 101. Avoid technical language, be supportive, and write concise responses.`;
+            Guidelines:
+            - If they want a light or elective course for Fall 2026, explicitly mention GESU 121, HUMN 102, or ARB 101 as choices.`;
+
+            if (successfullyAdded) {
+                systemPrompt += `\nCONTEXT UPDATE: The user just requested to add ${successfullyAdded}. Acknowledge that you have successfully processed this and it is now physically locked into their Fall 2026 worksheet layout. Encourage them to see if they want to add another course to reach an optimized 15 credit hour milestone!`;
+            }
 
             try {
                 const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -688,20 +743,27 @@
                         "Authorization": `Bearer ${apiKey}`
                     },
                     body: JSON.stringify({
-                        model: "gpt-4o-mini", // Uses high-efficiency low cost model
+                        model: "gpt-4o-mini",
                         messages: [
                             { role: "system", content: systemPrompt },
                             { role: "user", content: userText }
                         ],
-                        temperature: 0.7
+                        temperature: 0.6
                     })
                 });
 
                 const data = await response.json();
-                document.getElementById("loadingMsg").remove(); // Strip status tracking text
+                document.getElementById("loadingMsg").remove();
 
                 if (data.choices && data.choices[0]) {
-                    appendMessage(data.choices[0].message.content, "bot");
+                    const aiReplyText = data.choices[0].message.content;
+                    appendMessage(aiReplyText, "bot");
+
+                    // Scan response to cache suggestions for next loop context window
+                    lastSuggestedCourses = [];
+                    if (aiReplyText.includes("GESU 121")) lastSuggestedCourses.push("GESU 121");
+                    if (aiReplyText.includes("HUMN 102")) lastSuggestedCourses.push("HUMN 102");
+                    if (aiReplyText.includes("ARB 101")) lastSuggestedCourses.push("ARB 101");
                 } else {
                     appendMessage("Error parsing stream sequence. Check key parameters or usage limits.", "bot");
                 }
