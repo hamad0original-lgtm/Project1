@@ -177,7 +177,7 @@
         .student-meta-inline {
             display: flex;
             flex-wrap: wrap;
-            gap: x;
+            gap: 12px;
             row-gap: 12px;
             column-gap: 24px;
             font-size: 13px;
@@ -476,7 +476,7 @@
         </div>
         <div class="header-right">
             <div class="user-avatar">👤</div>
-            <span>Faraj Awadh Alseiari, Hamad Arif</span>
+            <span>Salem Ahmed Al-Mansoori</span>
         </div>
     </header>
 
@@ -490,11 +490,11 @@
             <div class="student-grid">
                 <div class="info-box">
                     <label>Student ID</label>
-                    <span>202411618</span>
+                    <span>202500123</span>
                 </div>
                 <div class="info-box">
                     <label>Name</label>
-                    <span>Faraj Awadh Alseiari, Hamad Arif</span>
+                    <span>Salem Ahmed Al-Mansoori</span>
                 </div>
                 <div class="info-box">
                     <label>Degree</label>
@@ -505,19 +505,19 @@
             <div class="student-meta-inline">
                 <div class="meta-item"><strong>Level</strong> Undergraduate</div>
                 <div class="meta-item"><strong>Classification</strong> First Year</div>
-                <div class="meta-item"><strong>Major</strong> Petroleum Engineering - PETE</div>
-                <div class="meta-item"><strong>Program</strong> Petroleum Engineering</div>
+                <div class="meta-item"><strong>Major</strong> Mechanical Engineering - MECH</div>
+                <div class="meta-item"><strong>Program</strong> Mechanical Engineering</div>
                 <div class="meta-item"><strong>College</strong> Engineering</div>
                 <div class="meta-item"><strong>Academic Standing</strong> Good Standing</div>
-                <div class="meta-item"><strong>Admit Term</strong> Fall 2024</div>
+                <div class="meta-item"><strong>Admit Term</strong> Fall 2025</div>
                 <div class="meta-item"><strong>Catalog Year</strong> Fall 2025</div>
                 <div class="meta-item"><strong>Student Status</strong> Active</div>
-                <div class="meta-item"><strong>Sponsor</strong> Scholarship of ADNOC</div>
+                <div class="meta-item"><strong>Sponsor</strong> Ministry of Education Scholarship</div>
             </div>
         </div>
 
-        <!-- TIMELINE COMPONENT FROM IMAGE 3 -->
-        <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--text-dark);">Engineering Petroleum (F25) Plan View</h2>
+        <!-- TIMELINE COMPONENT -->
+        <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--text-dark);">Mechanical Engineering Plan View</h2>
         
         <div class="term-container">
             <!-- Fall 2025 -->
@@ -599,7 +599,7 @@
                     <span class="badge badge-pending">Planned</span>
                 </div>
                 <div class="course-card">
-                    <div class="course-code">PETE 305</div>
+                    <div class="course-code">MECH 305</div>
                     <div class="course-credits">Credits: 3.0</div>
                     <span class="badge badge-pending">Planned</span>
                 </div>
@@ -612,7 +612,7 @@
         </div>
     </main>
 
-    <!-- --- AI INTELLIGENT COMPONENT WIDGET --- -->
+    <!-- --- AI COMPONENT WIDGET --- -->
     <div class="ai-fab" onclick="toggleAIPanel()">
         <div class="ai-fab-pulse"></div>
         <span style="font-size: 24px; font-weight: bold;">🤖</span>
@@ -626,15 +626,14 @@
         
         <div class="ai-chat-body" id="chatBody">
             <div class="chat-msg msg-bot">
-                Marhaban Hamad! I am your AI academic advisor. I have analyzed your <strong>Petroleum Engineering</strong> degree plan. How can I help you clear your track today?
+                Marhaban! I am your AI academic advisor. I have analyzed your <strong>Mechanical Engineering</strong> degree plan. How can I help you clear your track today?
             </div>
         </div>
 
-        <!-- Sample interactive test cases for users to press during slide demo -->
         <div class="chips-container">
             <div class="prompt-chip" onclick="sendPreset('Optimize my Summer 2026 track')">⚡ Optimize Summer 2026</div>
-            <div class="prompt-chip" onclick="sendPreset('Check prerequisites for PETE 305')">🔍 PETE 305 Prereqs</div>
-            <div class="prompt-chip" onclick="sendPreset('Am I on track for my ADNOC sponsorship?')">📋 ADNOC Standing</div>
+            <div class="prompt-chip" onclick="sendPreset('Check prerequisites for MECH 305')">🔍 MECH 305 Prereqs</div>
+            <div class="prompt-chip" onclick="sendPreset('Am I on track for my scholarship standing?')">📋 Scholarship Standing</div>
         </div>
 
         <div class="ai-input-box">
@@ -647,7 +646,6 @@
         Ellucian Degree Works™ - Enhanced with Project AI Engine Prototype © 2026
     </footer>
 
-    <!-- INTERACTIVE SYSTEM JAVASCRIPT -->
     <script>
         function toggleAIPanel() {
             const panel = document.getElementById('aiPanel');
@@ -668,16 +666,15 @@
             appendMessage(text, 'user');
             input.value = '';
 
-            // Simulated intelligent advisor engine response logic
             setTimeout(() => {
                 let reply = "I am processing your structural degree adjustments based on the UAEU catalog configuration rules. Let me double-check that setup.";
                 
                 if(text.includes('Summer 2026')) {
-                    reply = "Your **GEIE 222** class is registered for Summer 2026. Taking 3 credits keeps your summer load optimal while opening up prerequisite pathways for **PETE 305** and advanced engineering models in Fall 2026!";
-                } else if(text.includes('PETE 305')) {
-                    reply = "Checking requirements for **PETE 305 (Fall 2026)**: System indicators show your current progress in **MATH 130** and your incoming foundational coursework fully clear the entry criteria. You are safe to lock this schedule.";
-                } else if(text.includes('ADNOC')) {
-                    reply = "Sponsor check: Your **Academic Standing is Excellent (Good Standing)**. Your current completed credit progression rate aligns perfectly with the standard parameters required by the **Scholarship of ADNOC**.";
+                    reply = "Your **GEIE 222** class is registered for Summer 2026. Taking 3 credits keeps your summer load optimal while opening up prerequisite pathways for **MECH 305** and advanced engineering models in Fall 2026!";
+                } else if(text.includes('MECH 305')) {
+                    reply = "Checking requirements for **MECH 305 (Fall 2026)**: System indicators show your current progress in **MATH 130** and your incoming foundational coursework fully clear the entry criteria. You are safe to lock this schedule.";
+                } else if(text.includes('scholarship')) {
+                    reply = "Sponsor check: Your **Academic Standing is Excellent (Good Standing)**. Your current completed credit progression rate aligns perfectly with the standard parameters required to maintain your scholarship.";
                 }
 
                 appendMessage(reply, 'bot');
@@ -689,11 +686,11 @@
             setTimeout(() => {
                 let reply = "";
                 if(presetText.includes('Summer 2026')) {
-                    reply = "Your **GEIE 222** class is registered for Summer 2026. Taking 3 credits keeps your summer load optimal while opening up prerequisite pathways for **PETE 305** and advanced engineering models in Fall 2026!";
-                } else if(presetText.includes('PETE 305')) {
-                    reply = "Checking requirements for **PETE 305 (Fall 2026)**: System indicators show your current progress in **MATH 130** and your incoming foundational coursework fully clear the entry criteria. You are safe to lock this schedule.";
-                } else if(presetText.includes('ADNOC')) {
-                    reply = "Sponsor check: Your **Academic Standing is Excellent (Good Standing)**. Your current completed credit progression rate aligns perfectly with the standard parameters required by the **Scholarship of ADNOC**.";
+                    reply = "Your **GEIE 222** class is registered for Summer 2026. Taking 3 credits keeps your summer load optimal while opening up prerequisite pathways for **MECH 305** and advanced engineering models in Fall 2026!";
+                } else if(presetText.includes('MECH 305')) {
+                    reply = "Checking requirements for **MECH 305 (Fall 2026)**: System indicators show your current progress in **MATH 130** and your incoming foundational coursework fully clear the entry criteria. You are safe to lock this schedule.";
+                } else if(presetText.includes('scholarship')) {
+                    reply = "Sponsor check: Your **Academic Standing is Excellent (Good Standing)**. Your current completed credit progression rate aligns perfectly with the standard parameters required to maintain your scholarship.";
                 }
                 appendMessage(reply, 'bot');
             }, 600);
