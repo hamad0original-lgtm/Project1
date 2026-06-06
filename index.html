@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UAEU Study Planner - Mechanical Engineering AI Mockup</title>
+    <title>Study Planner</title>
     <style>
-        /* --- UAEU BRAND THEME COLORS & STYLES --- */
+        /* --- BRAND REPLICATION: UAEU THEME GRAPHICS --- */
         :root {
             --uaeu-red: #D22630;
             --uaeu-dark-red: #A61C24;
@@ -124,7 +124,7 @@
             font-weight: 700;
         }
 
-        /* --- CARD STYLING --- */
+        /* --- PROFILE BLOCK --- */
         .card {
             background: #FFFFFF;
             border-radius: 8px;
@@ -147,7 +147,6 @@
             border-top-right-radius: 8px;
         }
 
-        /* Student Grid Info */
         .student-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -187,7 +186,14 @@
             font-weight: 700;
         }
 
-        /* --- TERM KANBAN COLUMNS --- */
+        /* --- KANBAN PLAN GRID --- */
+        .plan-list-header {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
         .term-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -201,7 +207,7 @@
             border: 1px solid var(--card-border);
             border-radius: 6px;
             padding: 16px;
-            min-width: 250px;
+            min-width: 260px;
         }
 
         .term-header {
@@ -230,8 +236,9 @@
         }
 
         .badge-pending {
-            color: var(--status-orange);
-            background-color: var(--status-orange-bg);
+            color: var(--text-muted);
+            background-color: #F0F2F5;
+            border: 1px solid #D1D5DB;
         }
 
         .term-credits {
@@ -240,7 +247,6 @@
             margin-bottom: 16px;
         }
 
-        /* Course Cards */
         .course-card {
             background: #FFFFFF;
             border: 1px solid #B0D4FF;
@@ -249,7 +255,6 @@
             padding: 12px;
             margin-bottom: 12px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            transition: all 0.3s ease;
         }
 
         .course-code {
@@ -265,18 +270,16 @@
             margin-bottom: 8px;
         }
 
-        /* Animated addition styling */
-        .new-course-animation {
-            animation: slideIn 0.5s ease forward;
-            border-left-color: #2E7D32 !important;
+        .new-addition-effect {
+            animation: renderEntry 0.6s ease-out forwards;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes renderEntry {
+            from { opacity: 0; transform: scale(0.95) translateY(-5px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* --- INTERACTIVE FLOATING AI CHAT BOT --- */
+        /* --- FLOATING DIALOGUE PANEL --- */
         .ai-fab {
             position: fixed;
             bottom: 24px;
@@ -292,11 +295,6 @@
             box-shadow: 0 6px 20px rgba(210, 38, 48, 0.4);
             cursor: pointer;
             z-index: 1000;
-            transition: transform 0.2s ease;
-        }
-
-        .ai-fab:hover {
-            transform: scale(1.08);
         }
 
         .ai-fab-pulse {
@@ -306,22 +304,21 @@
             background: var(--uaeu-red);
             border-radius: 50%;
             opacity: 0.4;
-            animation: pulse 2s infinite;
+            animation: pulse-ring 2s infinite;
             z-index: -1;
         }
 
-        @keyframes pulse {
+        @keyframes pulse-ring {
             0% { transform: scale(1); opacity: 0.4; }
             100% { transform: scale(1.6); opacity: 0; }
         }
 
-        /* AI Panel Window */
         .ai-panel {
             position: fixed;
             bottom: 96px;
             right: 24px;
-            width: 380px;
-            height: 520px;
+            width: 410px;
+            height: 540px;
             background: #FFFFFF;
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.15);
@@ -330,10 +327,10 @@
             flex-direction: column;
             z-index: 1000;
             overflow: hidden;
-            transform: translateY(20px);
+            transform: translateY(10px);
             opacity: 0;
             pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s ease;
         }
 
         .ai-panel.open {
@@ -352,11 +349,8 @@
         }
 
         .ai-header h3 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .close-btn {
@@ -379,10 +373,10 @@
 
         .chat-msg {
             max-width: 85%;
-            padding: 10px 14px;
+            padding: 12px 14px;
             border-radius: 8px;
             font-size: 13.5px;
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         .msg-bot {
@@ -399,9 +393,25 @@
             border-bottom-right-radius: 2px;
         }
 
-        /* AI Prompt Chips */
+        .option-list {
+            margin-top: 8px;
+            padding-left: 16px;
+            list-style-type: decimal;
+        }
+
+        .option-list li {
+            margin-bottom: 6px;
+        }
+
+        .clickable-choice {
+            color: #1976D2;
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
         .chips-container {
-            padding: 8px 16px;
+            padding: 10px 16px;
             background: #FFFFFF;
             border-top: 1px solid #EEEEEE;
             display: flex;
@@ -415,18 +425,15 @@
             border: 1px solid #E5E7EB;
             padding: 6px 12px;
             border-radius: 16px;
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .prompt-chip:hover {
             background: #E5E7EB;
-            color: var(--text-dark);
         }
 
-        /* Input Area */
         .ai-input-box {
             padding: 12px;
             background: #FFFFFF;
@@ -444,10 +451,6 @@
             outline: none;
         }
 
-        .ai-input-box input:focus {
-            border-color: var(--uaeu-red);
-        }
-
         .ai-input-box button {
             background: var(--uaeu-red);
             color: white;
@@ -456,10 +459,6 @@
             border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
-        }
-
-        .ai-input-box button:hover {
-            background: var(--uaeu-dark-red);
         }
 
         footer {
@@ -474,7 +473,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR GRAPHIC -->
+    <!-- NAV BLOCK -->
     <header>
         <div class="header-left">
             <div class="logo-box">UAEU</div>
@@ -488,7 +487,7 @@
         </div>
         <div class="header-right">
             <div class="user-avatar">👤</div>
-            <span>Salem Ahmed Al-Mansoori</span>
+            <span>Salem Ahmed</span>
         </div>
     </header>
 
@@ -497,20 +496,19 @@
             <h1>Study Planner</h1>
         </div>
 
-        <!-- PROFILE HEADER BLOCK -->
         <div class="card">
             <div class="student-grid">
                 <div class="info-box">
-                    <label>Total Planned Credits</label>
-                    <span id="totalCreditsBanner">132.0</span>
+                    <label>Student ID</label>
+                    <span>202411618</span>
                 </div>
                 <div class="info-box">
-                    <label>Name / Profile</label>
-                    <span>Salem Ahmed Al-Mansoori</span>
+                    <label>Name</label>
+                    <span>Salem Ahmed</span>
                 </div>
                 <div class="info-box">
                     <label>Degree</label>
-                    <span>Bachelor of Science</span>
+                    <span>Bachelor</span>
                 </div>
             </div>
 
@@ -518,114 +516,116 @@
                 <div class="meta-item"><strong>Level</strong> Undergraduate</div>
                 <div class="meta-item"><strong>Classification</strong> First Year</div>
                 <div class="meta-item"><strong>Major</strong> Mechanical Engineering - MECH</div>
-                <div class="meta-item"><strong>Program</strong> Mechanical Engineering Model Study Plan (2025-2026)</div>
-                <div class="meta-item"><strong>College</strong> College of Engineering</div>
+                <div class="meta-item"><strong>Program</strong> Mechanical Engineering</div>
+                <div class="meta-item"><strong>College</strong> Engineering</div>
                 <div class="meta-item"><strong>Academic Standing</strong> Good Standing</div>
-                <div class="meta-item"><strong>Admit Term</strong> Fall Semester Admission</div>
-                <div class="meta-item"><strong>Student Status</strong> Active Profile</div>
+                <div class="meta-item"><strong>Admit Term</strong> Fall 2024</div>
+                <div class="meta-item"><strong>Catalog Year</strong> Fall 2025</div>
+                <div class="meta-item"><strong>Student Status</strong> Active</div>
+                <div class="meta-item"><strong>Hold</strong> No Hold</div>
+                <div class="meta-item"><strong>Gender</strong> Male</div>
             </div>
         </div>
 
-        <!-- TIMELINE COMPONENT -->
-        <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--text-dark);">Official 2025-2026 Curriculum Sequence</h2>
+        <div class="plan-list-header">Engineering Mechanical (F25)</div>
         
         <div class="term-container">
-            <!-- Year 1: Fall -->
+            <!-- Fall 2025 -->
             <div class="term-column">
                 <div class="term-header">
-                    <div class="term-title">Year 1: Fall</div>
-                    <span class="badge badge-on-track">Completed</span>
+                    <div class="term-title">Fall 2025</div>
+                    <span class="badge badge-on-track">On Track</span>
                 </div>
-                <div class="term-credits">Credits: 16.0</div>
+                <div class="term-credits">Credits: 14</div>
                 
                 <div class="course-card">
-                    <div class="course-code">MATH 105</div>
-                    <div class="course-credits">Calculus I (3.0 cr)</div>
-                    <span class="badge badge-on-track">Passed</span>
+                    <div class="course-code">GEAE 101</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">MATH 130</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
                 </div>
                 <div class="course-card">
                     <div class="course-code">PHYS 105</div>
-                    <div class="course-credits">General Physics I (3.0 cr)</div>
-                    <span class="badge badge-on-track">Passed</span>
-                </div>
-                <div class="course-card">
-                    <div class="course-code">CHEM 111</div>
-                    <div class="course-credits">General Chemistry I (3.0 cr)</div>
-                    <span class="badge badge-on-track">Passed</span>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
                 </div>
             </div>
 
-            <!-- Year 1: Spring -->
+            <!-- Spring 2026 -->
             <div class="term-column">
                 <div class="term-header">
-                    <div class="term-title">Year 1: Spring</div>
-                    <span class="badge badge-on-track">Completed</span>
+                    <div class="term-title">Spring 2026</div>
+                    <span class="badge badge-on-track">On Track</span>
                 </div>
-                <div class="term-credits">Credits: 17.0</div>
+                <div class="term-credits">Credits: 15</div>
                 
                 <div class="course-card">
-                    <div class="course-code">MATH 110</div>
-                    <div class="course-credits">Calculus II (3.0 cr)</div>
-                    <span class="badge badge-on-track">Passed</span>
-                </div>
-                <div class="course-card">
                     <div class="course-code">PHYS 110</div>
-                    <div class="course-credits">General Physics II (3.0 cr)</div>
-                    <span class="badge badge-on-track">Passed</span>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
                 </div>
                 <div class="course-card">
                     <div class="course-code">GENG 215</div>
-                    <div class="course-credits">Engineering Design (2.0 cr)</div>
-                    <span class="badge badge-on-track">Passed</span>
+                    <div class="course-credits">Credits: 2.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">GEOL 100</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
                 </div>
             </div>
 
-            <!-- Summer Track -->
-            <div class="term-column" style="border-color: #B0D4FF; background-color: #FDFEFE;" id="summerColumn">
-                <div class="term-header">
-                    <div class="term-title">Summer Session</div>
-                    <span class="badge badge-on-track" id="summerStatusBadge">Current</span>
-                </div>
-                <div class="term-credits" id="summerCreditsText">Credits: 3.0</div>
-                
-                <div class="course-card" style="border-left-color: var(--uaeu-red);" id="geieCard">
-                    <div class="course-code" style="color: var(--uaeu-red);">GEIE 222</div>
-                    <div class="course-credits">Project Design Thinking (3.0 cr)</div>
-                    <span class="badge badge-on-track">In Progress</span>
-                </div>
-            </div>
-
-            <!-- Year 2: Fall -->
+            <!-- Summer 2026 -->
             <div class="term-column">
                 <div class="term-header">
-                    <div class="term-title">Year 2: Fall</div>
-                    <span class="badge badge-pending">Planned</span>
+                    <div class="term-title">Summer 2026</div>
+                    <span class="badge badge-on-track">On Track</span>
                 </div>
-                <div class="term-credits">Credits: 16.0</div>
+                <div class="term-credits">Credits: 3</div>
                 
                 <div class="course-card">
-                    <div class="course-code">MATH 205</div>
-                    <div class="course-credits">Linear Algebra (3.0 cr)</div>
-                    <span class="badge badge-pending">Locked</span>
+                    <div class="course-code">GEIE 222</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+            </div>
+
+            <!-- Fall 2026 -->
+            <div class="term-column" id="fall2026Column" style="border: 2px dashed #B0D4FF; background-color: #FDFEFE;">
+                <div class="term-header">
+                    <div class="term-title" style="color: #1976D2;">Fall 2026</div>
+                    <span class="badge badge-pending">- - -</span>
+                </div>
+                <div class="term-credits" id="fallCreditsText">Credits: 9</div>
+                
+                <div class="course-card">
+                    <div class="course-code">CHEM 111</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-pending">- - -</span>
                 </div>
                 <div class="course-card">
-                    <div class="course-code">MECH 305</div>
-                    <div class="course-credits">Mechanical Graphics (3.0 cr)</div>
-                    <span class="badge badge-pending">Locked</span>
+                    <div class="course-code">PETE 305</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-pending">- - -</span>
                 </div>
                 <div class="course-card">
-                    <div class="course-code">GENG 220</div>
-                    <div class="course-credits">Engineering Dynamics (3.0 cr)</div>
-                    <span class="badge badge-pending">Locked</span>
+                    <div class="course-code">MATH 140</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-pending">- - -</span>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- --- AI COMPONENT WIDGET --- -->
+    <!-- --- ADVISOR MODULE PANEL --- -->
     <div class="ai-fab" onclick="toggleAIPanel()">
         <div class="ai-fab-pulse"></div>
-        <span style="font-size: 24px; font-weight: bold;">🤖</span>
+        <span style="font-size: 24px;">🤖</span>
     </div>
 
     <div class="ai-panel open" id="aiPanel">
@@ -636,101 +636,128 @@
         
         <div class="ai-chat-body" id="chatBody">
             <div class="chat-msg msg-bot">
-                Marhaban Salem! I have verified your parameters against the official **Mechanical Engineering Model Study Plan (132 Credit Framework)**. How can I assist you with your course alignment today?
+                Marhaban! I am your AI academic advisor. I have analyzed your Mechanical Engineering degree plan. How can I help you clear your track today?
             </div>
         </div>
 
-        <div class="chips-container">
-            <div class="prompt-chip" onclick="sendPreset('Add elective course to Summer 2026')">➕ Add Summer Course</div>
-            <div class="prompt-chip" onclick="sendPreset('Check prerequisites for MECH 305')">🔍 MECH 305 Requirements</div>
-            <div class="prompt-chip" onclick="sendPreset('Verify my current Academic Standing profile')">📋 Audit Credit Status</div>
+        <div class="chips-container" id="chipsZone">
+            <div class="prompt-chip" onclick="triggerLightDialogue()">💡 Request Light Course Track</div>
+            <div class="prompt-chip" onclick="triggerStandardDialogue()">⚙️ Request Core MECH Track</div>
         </div>
 
         <div class="ai-input-box">
-            <input type="text" id="userInput" placeholder="Type 'add course' to watch the AI edit your path..." onkeypress="handleKeyPress(event)">
-            <button onclick="sendMessage()">Send</button>
+            <input type="text" id="userInput" placeholder="Ask about paths or track rules..." onkeypress="handleKeyPress(event)">
+            <button onclick="handleManualSend()">Send</button>
         </div>
     </div>
 
     <footer>
-        Ellucian Degree Works™ - Custom AI Integration Framework Verification Engine © 2026
+        Ellucian Degree Works - © Copyright 1995-2026 Ellucian Company L.P. and its affiliates
     </footer>
 
     <script>
-        let courseAdded = false;
+        let currentDialogueStage = 0;
+        let dialogueMode = ""; // "light" or "standard"
 
         function toggleAIPanel() {
-            const panel = document.getElementById('aiPanel');
-            panel.classList.toggle('open');
+            document.getElementById('aiPanel').classList.toggle('open');
         }
 
         function handleKeyPress(e) {
             if(e.key === 'Enter') {
-                sendMessage();
+                handleManualSend();
             }
         }
 
-        function executeVisualAddCourse() {
-            if (courseAdded) return "Course is already appended to your current track.";
-            
-            // Physically add a new course card to the webpage layout via DOM
-            const summerCol = document.getElementById('summerColumn');
-            const newCard = document.createElement('div');
-            newCard.className = 'course-card new-course-animation';
-            newCard.style.borderLeftColor = '#2E7D32';
-            newCard.innerHTML = `
-                <div class="course-code" style="color: #2E7D32;">MECH 240</div>
-                <div class="course-credits">Fluid Mechanics (3.0 cr)</div>
-                <span class="badge badge-on-track" style="background-color: var(--status-green-bg); color: var(--status-green);">AI Appended</span>
-            `;
-            summerCol.appendChild(newCard);
-
-            // Update page credits dynamically 
-            document.getElementById('summerCreditsText').innerText = "Credits: 6.0";
-            document.getElementById('totalCreditsBanner').innerText = "135.0";
-            
-            courseAdded = true;
-            return "Action executed! I have dynamically modified your interface layout and inserted **MECH 240 (Fluid Mechanics)** into your Summer Session column.";
-        }
-
-        function sendMessage() {
+        function handleManualSend() {
             const input = document.getElementById('userInput');
-            const text = input.value.trim();
-            if(!text) return;
+            const val = input.value.trim().toLowerCase();
+            if(!val) return;
 
-            appendMessage(text, 'user');
+            appendMessage(input.value, 'user');
             input.value = '';
 
             setTimeout(() => {
-                let lowerText = text.toLowerCase();
-                let reply = "I am processing your request template parameters against the curriculum flow guidelines.";
-                
-                if (lowerText.includes('add') || lowerText.includes('course') || lowerText.includes('edit') || lowerText.includes('insert')) {
-                    reply = executeVisualAddCourse();
-                } else if(lowerText.includes('mech 305') || lowerText.includes('prereq')) {
-                    reply = "Prerequisite Audit for **MECH 305 (Mechanical Graphics)**: System checks confirm your Year 1 prerequisites are successfully cleared.";
-                } else if(lowerText.includes('standing') || lowerText.includes('academic')) {
-                    reply = "Academic Audit Data: Your cumulative profile registers a status of **Good Standing**.";
+                if (val.includes('light') || val.includes('nothing heavy')) {
+                    respondLightOptions();
+                } else if (val.includes('core') || val.includes('heavy') || val.includes('standard') || val.includes('engineering')) {
+                    respondStandardOptions();
+                } else if (currentDialogueStage === 1) {
+                    processSelection("GESU 121");
+                } else {
+                    appendMessage("For sure! Let me know if you need any other sequence adjustments.", "bot");
                 }
-
-                appendMessage(reply, 'bot');
             }, 600);
         }
 
-        function sendPreset(presetText) {
-            appendMessage(presetText, 'user');
+        // --- BRANCH A: LIGHT REQUESTED BY USER ---
+        function triggerLightDialogue() {
+            appendMessage("i want to add a course for fall 2026 what is the best course if i want nothing heavy for this term.", "user");
+            document.getElementById('chipsZone').innerHTML = '';
+            dialogueMode = "light";
+            setTimeout(respondLightOptions, 700);
+        }
+
+        function respondLightOptions() {
+            const promptHTML = `
+                yeah absolutely, if you want a light term then i suggest to add these courses:
+                <ol class="option-list">
+                    <li><span class="clickable-choice" onclick="selectCourse('GESU 121')">GESU 121 (Sustainability)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectCourse('HUMN 102')">HUMN 102 (Humanities)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectCourse('ARB 101')">ARB 101 (Arabic Language)</span> - 3.0 cr</li>
+                </ol>
+                <span style="font-size:11px; color:var(--text-muted);">*Prerequisites cleared. Click an elective option above to insert it.</span>
+            `;
+            appendMessage(promptHTML, 'bot');
+            currentDialogueStage = 1;
+        }
+
+        // --- BRANCH B: CORE PATHWAY RULES MATRIX ---
+        function triggerStandardDialogue() {
+            appendMessage("i want to add my next structural core courses for fall 2026. What should I take?", "user");
+            document.getElementById('chipsZone').innerHTML = '';
+            dialogueMode = "standard";
+            setTimeout(respondStandardOptions, 700);
+        }
+
+        function respondStandardOptions() {
+            const promptHTML = `
+                To stay optimized with the 2025-2026 core track sequencing requirements, you must clear your immediate prerequisites first. I suggest adding:
+                <ol class="option-list">
+                    <li><span class="clickable-choice" onclick="selectCourse('MECH 305')">MECH 305 (Mechanical Graphics)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectCourse('GENG 220')">GENG 220 (Engineering Dynamics)</span> - 3.0 cr</li>
+                </ol>
+                <span style="font-size:11px; color:var(--text-muted);">*Prerequisite validation checks complete for Year 1. Click a course to insert it.</span>
+            `;
+            appendMessage(promptHTML, 'bot');
+            currentDialogueStage = 1;
+        }
+
+        // --- SYSTEM COMPLETION EXECUTION ---
+        function selectCourse(courseName) {
+            appendMessage(`oh i would like you to add ${courseName} .`, 'user');
             setTimeout(() => {
-                let lowerPreset = presetText.toLowerCase();
-                let reply = "";
-                if(lowerPreset.includes('add') || lowerPreset.includes('summer')) {
-                    reply = executeVisualAddCourse();
-                } else if(lowerPreset.includes('mech 305')) {
-                    reply = "Prerequisite Audit for **MECH 305 (Mechanical Graphics)**: System checks confirm your Year 1 prerequisites are successfully cleared.";
-                } else if(lowerPreset.includes('standing') || lowerPreset.includes('academic')) {
-                    reply = "Academic Audit Data: Your cumulative profile registers a status of **Good Standing**.";
-                }
-                appendMessage(reply, 'bot');
-            }, 500);
+                processSelection(courseName);
+            }, 700);
+        }
+
+        function processSelection(chosenCourse) {
+            appendMessage(`yeah for sure ${chosenCourse} has been added. if you aim for a 15 hour credit i would suggest to you to add more courses.`, 'bot');
+            
+            // Render Card component directly to DOM
+            const fallColumn = document.getElementById('fall2026Column');
+            const newCourseCard = document.createElement('div');
+            newCourseCard.className = 'course-card new-addition-effect';
+            newCourseCard.innerHTML = `
+                <div class="course-code">${chosenCourse}</div>
+                <div class="course-credits">Credits: 3.0</div>
+                <span class="badge badge-on-track" style="background-color: var(--status-green-bg); color: var(--status-green);">AI Appended</span>
+            `;
+            fallColumn.appendChild(newCourseCard);
+
+            // Re-render numeric grid display
+            document.getElementById('fallCreditsText').innerText = "Credits: 12";
+            currentDialogueStage = 2;
         }
 
         function appendMessage(text, sender) {
