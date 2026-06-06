@@ -249,6 +249,7 @@
             padding: 12px;
             margin-bottom: 12px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
         }
 
         .course-code {
@@ -262,6 +263,17 @@
             font-size: 12px;
             color: var(--text-muted);
             margin-bottom: 8px;
+        }
+
+        /* Animated addition styling */
+        .new-course-animation {
+            animation: slideIn 0.5s ease forward;
+            border-left-color: #2E7D32 !important;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- INTERACTIVE FLOATING AI CHAT BOT --- */
@@ -462,6 +474,7 @@
 </head>
 <body>
 
+    <!-- NAVBAR GRAPHIC -->
     <header>
         <div class="header-left">
             <div class="logo-box">UAEU</div>
@@ -484,6 +497,7 @@
             <h1>Study Planner</h1>
         </div>
 
+        <!-- PROFILE HEADER BLOCK -->
         <div class="card">
             <div class="student-grid">
                 <div class="info-box">
@@ -512,9 +526,11 @@
             </div>
         </div>
 
+        <!-- TIMELINE COMPONENT -->
         <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--text-dark);">Official 2025-2026 Curriculum Sequence</h2>
         
         <div class="term-container">
+            <!-- Year 1: Fall -->
             <div class="term-column">
                 <div class="term-header">
                     <div class="term-title">Year 1: Fall</div>
@@ -539,6 +555,7 @@
                 </div>
             </div>
 
+            <!-- Year 1: Spring -->
             <div class="term-column">
                 <div class="term-header">
                     <div class="term-title">Year 1: Spring</div>
@@ -563,6 +580,7 @@
                 </div>
             </div>
 
+            <!-- Summer Track -->
             <div class="term-column" style="border-color: #B0D4FF; background-color: #FDFEFE;" id="summerColumn">
                 <div class="term-header">
                     <div class="term-title">Summer Session</div>
@@ -577,6 +595,7 @@
                 </div>
             </div>
 
+            <!-- Year 2: Fall -->
             <div class="term-column">
                 <div class="term-header">
                     <div class="term-title">Year 2: Fall</div>
@@ -603,6 +622,7 @@
         </div>
     </main>
 
+    <!-- --- AI COMPONENT WIDGET --- -->
     <div class="ai-fab" onclick="toggleAIPanel()">
         <div class="ai-fab-pulse"></div>
         <span style="font-size: 24px; font-weight: bold;">🤖</span>
@@ -621,13 +641,13 @@
         </div>
 
         <div class="chips-container">
-            <div class="prompt-chip" onclick="sendPreset('Optimize my Summer 2026 track')">⚡ Optimize Summer load</div>
+            <div class="prompt-chip" onclick="sendPreset('Add elective course to Summer 2026')">➕ Add Summer Course</div>
             <div class="prompt-chip" onclick="sendPreset('Check prerequisites for MECH 305')">🔍 MECH 305 Requirements</div>
             <div class="prompt-chip" onclick="sendPreset('Verify my current Academic Standing profile')">📋 Audit Credit Status</div>
         </div>
 
         <div class="ai-input-box">
-            <input type="text" id="userInput" placeholder="Ask about adding classes, limits, prerequisites..." onkeypress="handleKeyPress(event)">
+            <input type="text" id="userInput" placeholder="Type 'add course' to watch the AI edit your path..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -637,6 +657,8 @@
     </footer>
 
     <script>
+        let courseAdded = false;
+
         function toggleAIPanel() {
             const panel = document.getElementById('aiPanel');
             panel.classList.toggle('open');
@@ -646,6 +668,29 @@
             if(e.key === 'Enter') {
                 sendMessage();
             }
+        }
+
+        function executeVisualAddCourse() {
+            if (courseAdded) return "Course is already appended to your current track.";
+            
+            // Physically add a new course card to the webpage layout via DOM
+            const summerCol = document.getElementById('summerColumn');
+            const newCard = document.createElement('div');
+            newCard.className = 'course-card new-course-animation';
+            newCard.style.borderLeftColor = '#2E7D32';
+            newCard.innerHTML = `
+                <div class="course-code" style="color: #2E7D32;">MECH 240</div>
+                <div class="course-credits">Fluid Mechanics (3.0 cr)</div>
+                <span class="badge badge-on-track" style="background-color: var(--status-green-bg); color: var(--status-green);">AI Appended</span>
+            `;
+            summerCol.appendChild(newCard);
+
+            // Update page credits dynamically 
+            document.getElementById('summerCreditsText').innerText = "Credits: 6.0";
+            document.getElementById('totalCreditsBanner').innerText = "135.0";
+            
+            courseAdded = true;
+            return "Action executed! I have dynamically modified your interface layout and inserted **MECH 240 (Fluid Mechanics)** into your Summer Session column.";
         }
 
         function sendMessage() {
@@ -658,18 +703,18 @@
 
             setTimeout(() => {
                 let lowerText = text.toLowerCase();
-                let reply = "I am mapping your request to the 2025-2026 Bachelor of Science in Mechanical Engineering catalog profile constraints.";
+                let reply = "I am processing your request template parameters against the curriculum flow guidelines.";
                 
-                if (lowerText.includes('add another course') || lowerText.includes('add course') || lowerText.includes('more classes') || lowerText.includes('summer')) {
-                    reply = "According to the official UAEU registration ceiling rules for the **Summer Session**, you are limited to a maximum of **3 to 4 credits**. Since your current registration in **GEIE 222** accounts for 3.0 credits, adding an additional course would violate the credit restriction threshold. I suggest leaving your summer optimized as is.";
-                } else if(lowerText.includes('mech 305') || lowerText.includes('prereq') || lowerText.includes('requirement')) {
-                    reply = "Prerequisite Audit for **MECH 305 (Mechanical Graphics)**: This course requires successful passing marks in your Year 1 curriculum courses. Since you passed **GENG 215** and your math lines, your validation status is fully cleared to unlock this course next term.";
-                } else if(lowerText.includes('standing') || lowerText.includes('academic') || lowerText.includes('audit')) {
-                    reply = "Academic Audit Data: Your cumulative parameter profile reads **Good Standing**. You have successfully planned out of structural roadblocks and your track speed lines up safely with graduation windows.";
+                if (lowerText.includes('add') || lowerText.includes('course') || lowerText.includes('edit') || lowerText.includes('insert')) {
+                    reply = executeVisualAddCourse();
+                } else if(lowerText.includes('mech 305') || lowerText.includes('prereq')) {
+                    reply = "Prerequisite Audit for **MECH 305 (Mechanical Graphics)**: System checks confirm your Year 1 prerequisites are successfully cleared.";
+                } else if(lowerText.includes('standing') || lowerText.includes('academic')) {
+                    reply = "Academic Audit Data: Your cumulative profile registers a status of **Good Standing**.";
                 }
 
                 appendMessage(reply, 'bot');
-            }, 700);
+            }, 600);
         }
 
         function sendPreset(presetText) {
@@ -677,15 +722,15 @@
             setTimeout(() => {
                 let lowerPreset = presetText.toLowerCase();
                 let reply = "";
-                if(lowerPreset.includes('summer')) {
-                    reply = "According to the official UAEU registration ceiling rules for the **Summer Session**, you are limited to a maximum of **3 to 4 credits**. Since your current registration in **GEIE 222** accounts for 3.0 credits, adding an additional course would violate the credit restriction threshold. I suggest leaving your summer optimized as is.";
+                if(lowerPreset.includes('add') || lowerPreset.includes('summer')) {
+                    reply = executeVisualAddCourse();
                 } else if(lowerPreset.includes('mech 305')) {
-                    reply = "Prerequisite Audit for **MECH 305 (Mechanical Graphics)**: This course requires successful passing marks in your Year 1 curriculum courses. Since you passed **GENG 215** and your math lines, your validation status is fully cleared to unlock this course next term.";
+                    reply = "Prerequisite Audit for **MECH 305 (Mechanical Graphics)**: System checks confirm your Year 1 prerequisites are successfully cleared.";
                 } else if(lowerPreset.includes('standing') || lowerPreset.includes('academic')) {
-                    reply = "Academic Audit Data: Your cumulative parameter profile reads **Good Standing**. You have successfully planned out of structural roadblocks and your track speed lines up safely with graduation windows.";
+                    reply = "Academic Audit Data: Your cumulative profile registers a status of **Good Standing**.";
                 }
                 appendMessage(reply, 'bot');
-            }, 600);
+            }, 500);
         }
 
         function appendMessage(text, sender) {
