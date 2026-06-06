@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAEU Study Planner - AI Enhanced Mockup</title>
+    <style>
+        /* --- UAEU BRAND THEME COLORS & STYLES --- */
+        :root {
+            --uaeu-red: #D22630;
+            --uaeu-dark-red: #A61C24;
+            --bg-gray: #F4F5F7;
+            --card-border: #E2E4E8;
+            --text-dark: #222222;
+            --text-muted: #666666;
+            --status-green: #2E7D32;
+            --status-green-bg: #E8F5E9;
+            --status-orange: #EF6C00;
+            --status-orange-bg: #FFF3E0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            padding-bottom: 60px;
+        }
+
+        /* --- HEADER NAVBAR --- */
+        header {
+            background-color: #FFFFFF;
+            border-bottom: 4px solid var(--uaeu-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            height: 64px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo-box {
+            background-color: var(--uaeu-red);
+            color: #FFFFFF;
+            font-weight: 900;
+            font-size: 24px;
+            letter-spacing: 0.5px;
+            padding: 0 20px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        nav ul li a.active {
+            color: var(--uaeu-red);
+            border-bottom: 3px solid var(--uaeu-red);
+            padding-bottom: 21px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .user-avatar {
+            background-color: #E2E4E8;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        main {
+            max-width: 1400px;
+            margin: 32px auto;
+            padding: 0 24px;
+        }
+
+        .title-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .title-section h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* --- CARD STYLING --- */
+        .card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--uaeu-red);
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        /* Student Grid Info */
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: #F8F9FA;
+            border: 1px solid #E2E4E8;
+            border-radius: 4px;
+            padding: 12px;
+        }
+
+        .info-box label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .info-box span {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .student-meta-inline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: x;
+            row-gap: 12px;
+            column-gap: 24px;
+            font-size: 13px;
+        }
+
+        .meta-item strong {
+            font-weight: 700;
+        }
+
+        /* --- TERM KANBAN COLUMNS --- */
+        .term-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            overflow-x: auto;
+            align-items: start;
+        }
+
+        .term-column {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 16px;
+            min-width: 250px;
+        }
+
+        .term-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .term-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-on-track {
+            color: var(--status-green);
+            background-color: var(--status-green-bg);
+        }
+
+        .badge-pending {
+            color: var(--status-orange);
+            background-color: var(--status-orange-bg);
+        }
+
+        .term-credits {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* Course Cards */
+        .course-card {
+            background: #FFFFFF;
+            border: 1px solid #B0D4FF;
+            border-left: 4px solid #1976D2;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .course-code {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1976D2;
+            margin-bottom: 4px;
+        }
+
+        .course-credits {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        /* --- INTERACTIVE FLOATING AI CHAT BOT --- */
+        .ai-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, var(--uaeu-red), #5c0b10);
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(210, 38, 48, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.2s ease;
+        }
+
+        .ai-fab:hover {
+            transform: scale(1.08);
+        }
+
+        .ai-fab-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--uaeu-red);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        /* AI Panel Window */
+        .ai-panel {
+            position: fixed;
+            bottom: 96px;
+            right: 24px;
+            width: 380px;
+            height: 520px;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            border: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ai-panel.open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .ai-header {
+            background: var(--uaeu-red);
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .ai-chat-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background: #F9FAFB;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            line-height: 1.4;
+        }
+
+        .msg-bot {
+            background: #EBF3FF;
+            color: #1E3A8A;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .msg-user {
+            background: var(--uaeu-red);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        /* AI Prompt Chips */
+        .chips-container {
+            padding: 8px 16px;
+            background: #FFFFFF;
+            border-top: 1px solid #EEEEEE;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .prompt-chip {
+            background: #F0F2F5;
+            color: #4B5563;
+            border: 1px solid #E5E7EB;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .prompt-chip:hover {
+            background: #E5E7EB;
+            color: var(--text-dark);
+        }
+
+        /* Input Area */
+        .ai-input-box {
+            padding: 12px;
+            background: #FFFFFF;
+            border-top: 1px solid #EEEEEE;
+            display: flex;
+            gap: 8px;
+        }
+
+        .ai-input-box input {
+            flex: 1;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .ai-input-box input:focus {
+            border-color: var(--uaeu-red);
+        }
+
+        .ai-input-box button {
+            background: var(--uaeu-red);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .ai-input-box button:hover {
+            background: var(--uaeu-dark-red);
+        }
+
+        footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid var(--card-border);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR GRAPHIC -->
+    <header>
+        <div class="header-left">
+            <div class="logo-box">UAEU</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Worksheets</a></li>
+                    <li><a href="#" class="active">Plans</a></li>
+                    <li><a href="#">My Links</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="user-avatar">👤</div>
+            <span>Faraj Awadh Alseiari, Hamad Arif</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="title-section">
+            <h1>Study Planner</h1>
+        </div>
+
+        <!-- PROFILE HEADER BLOCK -->
+        <div class="card">
+            <div class="student-grid">
+                <div class="info-box">
+                    <label>Student ID</label>
+                    <span>202411618</span>
+                </div>
+                <div class="info-box">
+                    <label>Name</label>
+                    <span>Faraj Awadh Alseiari, Hamad Arif</span>
+                </div>
+                <div class="info-box">
+                    <label>Degree</label>
+                    <span>Bachelor</span>
+                </div>
+            </div>
+
+            <div class="student-meta-inline">
+                <div class="meta-item"><strong>Level</strong> Undergraduate</div>
+                <div class="meta-item"><strong>Classification</strong> First Year</div>
+                <div class="meta-item"><strong>Major</strong> Petroleum Engineering - PETE</div>
+                <div class="meta-item"><strong>Program</strong> Petroleum Engineering</div>
+                <div class="meta-item"><strong>College</strong> Engineering</div>
+                <div class="meta-item"><strong>Academic Standing</strong> Good Standing</div>
+                <div class="meta-item"><strong>Admit Term</strong> Fall 2024</div>
+                <div class="meta-item"><strong>Catalog Year</strong> Fall 2025</div>
+                <div class="meta-item"><strong>Student Status</strong> Active</div>
+                <div class="meta-item"><strong>Sponsor</strong> Scholarship of ADNOC</div>
+            </div>
+        </div>
+
+        <!-- TIMELINE COMPONENT FROM IMAGE 3 -->
+        <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--text-dark);">Engineering Petroleum (F25) Plan View</h2>
+        
+        <div class="term-container">
+            <!-- Fall 2025 -->
+            <div class="term-column">
+                <div class="term-header">
+                    <div class="term-title">Fall 2025</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="term-credits">Credits: 14.0</div>
+                
+                <div class="course-card">
+                    <div class="course-code">GEAE 101</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">MATH 130</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">PHYS 105</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+            </div>
+
+            <!-- Spring 2026 -->
+            <div class="term-column">
+                <div class="term-header">
+                    <div class="term-title">Spring 2026</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="term-credits">Credits: 15.0</div>
+                
+                <div class="course-card">
+                    <div class="course-code">PHYS 110</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">GENG 215</div>
+                    <div class="course-credits">Credits: 2.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">GEOL 100</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+            </div>
+
+            <!-- Summer 2026 -->
+            <div class="term-column" style="border-color: #B0D4FF; background-color: #FDFEFE;">
+                <div class="term-header">
+                    <div class="term-title">Summer 2026</div>
+                    <span class="badge badge-on-track">On Track</span>
+                </div>
+                <div class="term-credits">Credits: 3.0</div>
+                
+                <div class="course-card" style="border-left-color: var(--uaeu-red);">
+                    <div class="course-code" style="color: var(--uaeu-red);">GEIE 222</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-on-track">Current</span>
+                </div>
+            </div>
+
+            <!-- Fall 2026 -->
+            <div class="term-column">
+                <div class="term-header">
+                    <div class="term-title">Fall 2026</div>
+                    <span class="badge badge-pending">- - -</span>
+                </div>
+                <div class="term-credits">Credits: 15.0</div>
+                
+                <div class="course-card">
+                    <div class="course-code">CHEM 111</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-pending">Planned</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">PETE 305</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-pending">Planned</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">MATH 140</div>
+                    <div class="course-credits">Credits: 3.0</div>
+                    <span class="badge badge-pending">Planned</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- --- AI INTELLIGENT COMPONENT WIDGET --- -->
+    <div class="ai-fab" onclick="toggleAIPanel()">
+        <div class="ai-fab-pulse"></div>
+        <span style="font-size: 24px; font-weight: bold;">🤖</span>
+    </div>
+
+    <div class="ai-panel" id="aiPanel">
+        <div class="ai-header">
+            <h3>🤖 UAEU Smart Advisor AI</h3>
+            <button class="close-btn" onclick="toggleAIPanel()">×</button>
+        </div>
+        
+        <div class="ai-chat-body" id="chatBody">
+            <div class="chat-msg msg-bot">
+                Marhaban Hamad! I am your AI academic advisor. I have analyzed your <strong>Petroleum Engineering</strong> degree plan. How can I help you clear your track today?
+            </div>
+        </div>
+
+        <!-- Sample interactive test cases for users to press during slide demo -->
+        <div class="chips-container">
+            <div class="prompt-chip" onclick="sendPreset('Optimize my Summer 2026 track')">⚡ Optimize Summer 2026</div>
+            <div class="prompt-chip" onclick="sendPreset('Check prerequisites for PETE 305')">🔍 PETE 305 Prereqs</div>
+            <div class="prompt-chip" onclick="sendPreset('Am I on track for my ADNOC sponsorship?')">📋 ADNOC Standing</div>
+        </div>
+
+        <div class="ai-input-box">
+            <input type="text" id="userInput" placeholder="Ask about degree paths, terms..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <footer>
+        Ellucian Degree Works™ - Enhanced with Project AI Engine Prototype © 2026
+    </footer>
+
+    <!-- INTERACTIVE SYSTEM JAVASCRIPT -->
+    <script>
+        function toggleAIPanel() {
+            const panel = document.getElementById('aiPanel');
+            panel.classList.toggle('open');
+        }
+
+        function handleKeyPress(e) {
+            if(e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if(!text) return;
+
+            appendMessage(text, 'user');
+            input.value = '';
+
+            // Simulated intelligent advisor engine response logic
+            setTimeout(() => {
+                let reply = "I am processing your structural degree adjustments based on the UAEU catalog configuration rules. Let me double-check that setup.";
+                
+                if(text.includes('Summer 2026')) {
+                    reply = "Your **GEIE 222** class is registered for Summer 2026. Taking 3 credits keeps your summer load optimal while opening up prerequisite pathways for **PETE 305** and advanced engineering models in Fall 2026!";
+                } else if(text.includes('PETE 305')) {
+                    reply = "Checking requirements for **PETE 305 (Fall 2026)**: System indicators show your current progress in **MATH 130** and your incoming foundational coursework fully clear the entry criteria. You are safe to lock this schedule.";
+                } else if(text.includes('ADNOC')) {
+                    reply = "Sponsor check: Your **Academic Standing is Excellent (Good Standing)**. Your current completed credit progression rate aligns perfectly with the standard parameters required by the **Scholarship of ADNOC**.";
+                }
+
+                appendMessage(reply, 'bot');
+            }, 700);
+        }
+
+        function sendPreset(presetText) {
+            appendMessage(presetText, 'user');
+            setTimeout(() => {
+                let reply = "";
+                if(presetText.includes('Summer 2026')) {
+                    reply = "Your **GEIE 222** class is registered for Summer 2026. Taking 3 credits keeps your summer load optimal while opening up prerequisite pathways for **PETE 305** and advanced engineering models in Fall 2026!";
+                } else if(presetText.includes('PETE 305')) {
+                    reply = "Checking requirements for **PETE 305 (Fall 2026)**: System indicators show your current progress in **MATH 130** and your incoming foundational coursework fully clear the entry criteria. You are safe to lock this schedule.";
+                } else if(presetText.includes('ADNOC')) {
+                    reply = "Sponsor check: Your **Academic Standing is Excellent (Good Standing)**. Your current completed credit progression rate aligns perfectly with the standard parameters required by the **Scholarship of ADNOC**.";
+                }
+                appendMessage(reply, 'bot');
+            }, 600);
+        }
+
+        function appendMessage(text, sender) {
+            const chatBody = document.getElementById('chatBody');
+            const msg = document.createElement('div');
+            msg.className = `chat-msg msg-${sender}`;
+            msg.innerHTML = text;
+            chatBody.appendChild(msg);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    </script>
+</body>
+</html>
