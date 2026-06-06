@@ -657,7 +657,7 @@
 
     <script>
         let currentDialogueStage = 0;
-        let dialogueMode = ""; // "light" or "standard"
+        let totalCreditsAdded = 9;
 
         function toggleAIPanel() {
             document.getElementById('aiPanel').classList.toggle('open');
@@ -680,8 +680,8 @@
             setTimeout(() => {
                 if (val.includes('light') || val.includes('nothing heavy')) {
                     respondLightOptions();
-                } else if (val.includes('core') || val.includes('heavy') || val.includes('standard') || val.includes('engineering')) {
-                    respondStandardOptions();
+                } else if (val.includes('add more') || val.includes('more')) {
+                    respondToMoreRequest();
                 } else if (currentDialogueStage === 1) {
                     processSelection("GESU 121");
                 } else {
@@ -694,7 +694,6 @@
         function triggerLightDialogue() {
             appendMessage("i want to add a course for fall 2026 what is the best course if i want nothing heavy for this term.", "user");
             document.getElementById('chipsZone').innerHTML = '';
-            dialogueMode = "light";
             setTimeout(respondLightOptions, 700);
         }
 
@@ -702,9 +701,9 @@
             const promptHTML = `
                 yeah absolutely, if you want a light term then i suggest to add these courses:
                 <ol class="option-list">
-                    <li><span class="clickable-choice" onclick="selectCourse('GESU 121')">GESU 121 (Sustainability)</span> - 3.0 cr</li>
-                    <li><span class="clickable-choice" onclick="selectCourse('HUMN 102')">HUMN 102 (Humanities)</span> - 3.0 cr</li>
-                    <li><span class="clickable-choice" onclick="selectCourse('ARB 101')">ARB 101 (Arabic Language)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectFirstCourse('GESU 121')">GESU 121 (Sustainability)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectFirstCourse('HUMN 102')">HUMN 102 (Humanities)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectFirstCourse('ARB 101')">ARB 101 (Arabic Language)</span> - 3.0 cr</li>
                 </ol>
                 <span style="font-size:11px; color:var(--text-muted);">*Prerequisites cleared. Click an elective option above to insert it.</span>
             `;
@@ -712,52 +711,88 @@
             currentDialogueStage = 1;
         }
 
-        // --- BRANCH B: CORE PATHWAY RULES MATRIX ---
+        // Action when user clicks the first elective (e.g. GESU 121)
+        function selectFirstCourse(courseName) {
+            appendMessage(`oh i would like you to add ${courseName} .`, 'user');
+            
+            // Set up a chip in the tray so they can just click "ok add more" to test it cleanly
+            document.getElementById('chipsZone').innerHTML = `<div class="prompt-chip" onclick="triggerAddMore()">➕ ok add more</div>`;
+            
+            setTimeout(() => {
+                appendMessage(`yeah for sure ${courseName} has been added. if you aim for a 15 hour credit i would suggest to you to add more courses.`, 'bot');
+                renderCardToGrid(courseName);
+                currentDialogueStage = 2;
+            }, 700);
+        }
+
+        // Action when user types or clicks "ok add more"
+        function triggerAddMore() {
+            appendMessage("ok add more", "user");
+            document.getElementById('chipsZone').innerHTML = '';
+            setTimeout(respondToMoreRequest, 700);
+        }
+
+        function respondToMoreRequest() {
+            const promptHTML = `
+                Excellent choice. Since we already loaded your first elective, here are the remaining lightweight options available to hit your 15-credit preference safely:
+                <ol class="option-list">
+                    <li><span class="clickable-choice" onclick="selectSecondCourse('HUMN 102')">HUMN 102 (Humanities)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectSecondCourse('ARB 101')">ARB 101 (Arabic Language)</span> - 3.0 cr</li>
+                </ol>
+            `;
+            appendMessage(promptHTML, 'bot');
+            currentDialogueStage = 3;
+        }
+
+        function selectSecondCourse(courseName) {
+            appendMessage(`let's add ${courseName} as well.`, 'user');
+            setTimeout(() => {
+                appendMessage(`Perfect! ${courseName} is now locked into your schedule sequence. Your Fall 2026 block is now fully optimized at 15 credit hours total!`, 'bot');
+                renderCardToGrid(courseName);
+                currentDialogueStage = 4;
+            }, 700);
+        }
+
+        // --- BRANCH B: CORE TRACK REQUIREMENTS ---
         function triggerStandardDialogue() {
             appendMessage("i want to add my next structural core courses for fall 2026. What should I take?", "user");
             document.getElementById('chipsZone').innerHTML = '';
-            dialogueMode = "standard";
             setTimeout(respondStandardOptions, 700);
         }
 
         function respondStandardOptions() {
             const promptHTML = `
-                To stay optimized with the 2025-2026 core track sequencing requirements, you must clear your immediate prerequisites first. I suggest adding:
+                To stay optimized with the core track sequencing requirements, you must clear your immediate prerequisites first. I suggest adding:
                 <ol class="option-list">
-                    <li><span class="clickable-choice" onclick="selectCourse('MECH 305')">MECH 305 (Mechanical Graphics)</span> - 3.0 cr</li>
-                    <li><span class="clickable-choice" onclick="selectCourse('GENG 220')">GENG 220 (Engineering Dynamics)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectCoreCourse('MECH 305')">MECH 305 (Mechanical Graphics)</span> - 3.0 cr</li>
+                    <li><span class="clickable-choice" onclick="selectCoreCourse('GENG 220')">GENG 220 (Engineering Dynamics)</span> - 3.0 cr</li>
                 </ol>
-                <span style="font-size:11px; color:var(--text-muted);">*Prerequisite validation checks complete for Year 1. Click a course to insert it.</span>
             `;
             appendMessage(promptHTML, 'bot');
-            currentDialogueStage = 1;
         }
 
-        // --- SYSTEM COMPLETION EXECUTION ---
-        function selectCourse(courseName) {
-            appendMessage(`oh i would like you to add ${courseName} .`, 'user');
+        function selectCoreCourse(courseName) {
+            appendMessage(`Add ${courseName} to my planner.`, 'user');
             setTimeout(() => {
-                processSelection(courseName);
+                appendMessage(`Confirming entry: ${courseName} has been successfully added to your Fall term structure.`, 'bot');
+                renderCardToGrid(courseName);
             }, 700);
         }
 
-        function processSelection(chosenCourse) {
-            appendMessage(`yeah for sure ${chosenCourse} has been added. if you aim for a 15 hour credit i would suggest to you to add more courses.`, 'bot');
-            
-            // Render Card component directly to DOM
+        // --- HELPER RENDERING DOM CONTROLLERS ---
+        function renderCardToGrid(courseCode) {
             const fallColumn = document.getElementById('fall2026Column');
             const newCourseCard = document.createElement('div');
             newCourseCard.className = 'course-card new-addition-effect';
             newCourseCard.innerHTML = `
-                <div class="course-code">${chosenCourse}</div>
+                <div class="course-code">${courseCode}</div>
                 <div class="course-credits">Credits: 3.0</div>
                 <span class="badge badge-on-track" style="background-color: var(--status-green-bg); color: var(--status-green);">AI Appended</span>
             `;
             fallColumn.appendChild(newCourseCard);
 
-            // Re-render numeric grid display
-            document.getElementById('fallCreditsText').innerText = "Credits: 12";
-            currentDialogueStage = 2;
+            totalCreditsAdded += 3;
+            document.getElementById('fallCreditsText').innerText = `Credits: ${totalCreditsAdded}`;
         }
 
         function appendMessage(text, sender) {
