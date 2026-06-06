@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UAEU Study Planner - AI Enhanced Mockup</title>
+    <title>UAEU Study Planner - Mechanical Engineering AI Mockup</title>
     <style>
         /* --- UAEU BRAND THEME COLORS & STYLES --- */
         :root {
@@ -462,7 +462,6 @@
 </head>
 <body>
 
-    <!-- NAVBAR GRAPHIC -->
     <header>
         <div class="header-left">
             <div class="logo-box">UAEU</div>
@@ -485,20 +484,19 @@
             <h1>Study Planner</h1>
         </div>
 
-        <!-- PROFILE HEADER BLOCK -->
         <div class="card">
             <div class="student-grid">
                 <div class="info-box">
-                    <label>Student ID</label>
-                    <span>202500123</span>
+                    <label>Total Planned Credits</label>
+                    <span id="totalCreditsBanner">132.0</span>
                 </div>
                 <div class="info-box">
-                    <label>Name</label>
+                    <label>Name / Profile</label>
                     <span>Salem Ahmed Al-Mansoori</span>
                 </div>
                 <div class="info-box">
                     <label>Degree</label>
-                    <span>Bachelor</span>
+                    <span>Bachelor of Science</span>
                 </div>
             </div>
 
@@ -506,119 +504,111 @@
                 <div class="meta-item"><strong>Level</strong> Undergraduate</div>
                 <div class="meta-item"><strong>Classification</strong> First Year</div>
                 <div class="meta-item"><strong>Major</strong> Mechanical Engineering - MECH</div>
-                <div class="meta-item"><strong>Program</strong> Mechanical Engineering</div>
-                <div class="meta-item"><strong>College</strong> Engineering</div>
+                <div class="meta-item"><strong>Program</strong> Mechanical Engineering Model Study Plan (2025-2026)</div>
+                <div class="meta-item"><strong>College</strong> College of Engineering</div>
                 <div class="meta-item"><strong>Academic Standing</strong> Good Standing</div>
-                <div class="meta-item"><strong>Admit Term</strong> Fall 2025</div>
-                <div class="meta-item"><strong>Catalog Year</strong> Fall 2025</div>
-                <div class="meta-item"><strong>Student Status</strong> Active</div>
-                <div class="meta-item"><strong>Sponsor</strong> Ministry of Education Scholarship</div>
+                <div class="meta-item"><strong>Admit Term</strong> Fall Semester Admission</div>
+                <div class="meta-item"><strong>Student Status</strong> Active Profile</div>
             </div>
         </div>
 
-        <!-- TIMELINE COMPONENT -->
-        <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--text-dark);">Mechanical Engineering Plan View</h2>
+        <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--text-dark);">Official 2025-2026 Curriculum Sequence</h2>
         
         <div class="term-container">
-            <!-- Fall 2025 -->
             <div class="term-column">
                 <div class="term-header">
-                    <div class="term-title">Fall 2025</div>
-                    <span class="badge badge-on-track">On Track</span>
+                    <div class="term-title">Year 1: Fall</div>
+                    <span class="badge badge-on-track">Completed</span>
                 </div>
-                <div class="term-credits">Credits: 14.0</div>
+                <div class="term-credits">Credits: 16.0</div>
                 
                 <div class="course-card">
-                    <div class="course-code">GEAE 101</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-on-track">On Track</span>
-                </div>
-                <div class="course-card">
-                    <div class="course-code">MATH 130</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-on-track">On Track</span>
+                    <div class="course-code">MATH 105</div>
+                    <div class="course-credits">Calculus I (3.0 cr)</div>
+                    <span class="badge badge-on-track">Passed</span>
                 </div>
                 <div class="course-card">
                     <div class="course-code">PHYS 105</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-on-track">On Track</span>
+                    <div class="course-credits">General Physics I (3.0 cr)</div>
+                    <span class="badge badge-on-track">Passed</span>
+                </div>
+                <div class="course-card">
+                    <div class="course-code">CHEM 111</div>
+                    <div class="course-credits">General Chemistry I (3.0 cr)</div>
+                    <span class="badge badge-on-track">Passed</span>
                 </div>
             </div>
 
-            <!-- Spring 2026 -->
             <div class="term-column">
                 <div class="term-header">
-                    <div class="term-title">Spring 2026</div>
-                    <span class="badge badge-on-track">On Track</span>
+                    <div class="term-title">Year 1: Spring</div>
+                    <span class="badge badge-on-track">Completed</span>
                 </div>
-                <div class="term-credits">Credits: 15.0</div>
+                <div class="term-credits">Credits: 17.0</div>
                 
                 <div class="course-card">
+                    <div class="course-code">MATH 110</div>
+                    <div class="course-credits">Calculus II (3.0 cr)</div>
+                    <span class="badge badge-on-track">Passed</span>
+                </div>
+                <div class="course-card">
                     <div class="course-code">PHYS 110</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-on-track">On Track</span>
+                    <div class="course-credits">General Physics II (3.0 cr)</div>
+                    <span class="badge badge-on-track">Passed</span>
                 </div>
                 <div class="course-card">
                     <div class="course-code">GENG 215</div>
-                    <div class="course-credits">Credits: 2.0</div>
-                    <span class="badge badge-on-track">On Track</span>
-                </div>
-                <div class="course-card">
-                    <div class="course-code">GEOL 100</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-on-track">On Track</span>
+                    <div class="course-credits">Engineering Design (2.0 cr)</div>
+                    <span class="badge badge-on-track">Passed</span>
                 </div>
             </div>
 
-            <!-- Summer 2026 -->
-            <div class="term-column" style="border-color: #B0D4FF; background-color: #FDFEFE;">
+            <div class="term-column" style="border-color: #B0D4FF; background-color: #FDFEFE;" id="summerColumn">
                 <div class="term-header">
-                    <div class="term-title">Summer 2026</div>
-                    <span class="badge badge-on-track">On Track</span>
+                    <div class="term-title">Summer Session</div>
+                    <span class="badge badge-on-track" id="summerStatusBadge">Current</span>
                 </div>
-                <div class="term-credits">Credits: 3.0</div>
+                <div class="term-credits" id="summerCreditsText">Credits: 3.0</div>
                 
-                <div class="course-card" style="border-left-color: var(--uaeu-red);">
+                <div class="course-card" style="border-left-color: var(--uaeu-red);" id="geieCard">
                     <div class="course-code" style="color: var(--uaeu-red);">GEIE 222</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-on-track">Current</span>
+                    <div class="course-credits">Project Design Thinking (3.0 cr)</div>
+                    <span class="badge badge-on-track">In Progress</span>
                 </div>
             </div>
 
-            <!-- Fall 2026 -->
             <div class="term-column">
                 <div class="term-header">
-                    <div class="term-title">Fall 2026</div>
-                    <span class="badge badge-pending">- - -</span>
+                    <div class="term-title">Year 2: Fall</div>
+                    <span class="badge badge-pending">Planned</span>
                 </div>
-                <div class="term-credits">Credits: 15.0</div>
+                <div class="term-credits">Credits: 16.0</div>
                 
                 <div class="course-card">
-                    <div class="course-code">CHEM 111</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-pending">Planned</span>
+                    <div class="course-code">MATH 205</div>
+                    <div class="course-credits">Linear Algebra (3.0 cr)</div>
+                    <span class="badge badge-pending">Locked</span>
                 </div>
                 <div class="course-card">
                     <div class="course-code">MECH 305</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-pending">Planned</span>
+                    <div class="course-credits">Mechanical Graphics (3.0 cr)</div>
+                    <span class="badge badge-pending">Locked</span>
                 </div>
                 <div class="course-card">
-                    <div class="course-code">MATH 140</div>
-                    <div class="course-credits">Credits: 3.0</div>
-                    <span class="badge badge-pending">Planned</span>
+                    <div class="course-code">GENG 220</div>
+                    <div class="course-credits">Engineering Dynamics (3.0 cr)</div>
+                    <span class="badge badge-pending">Locked</span>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- --- AI COMPONENT WIDGET --- -->
     <div class="ai-fab" onclick="toggleAIPanel()">
         <div class="ai-fab-pulse"></div>
         <span style="font-size: 24px; font-weight: bold;">🤖</span>
     </div>
 
-    <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel open" id="aiPanel">
         <div class="ai-header">
             <h3>🤖 UAEU Smart Advisor AI</h3>
             <button class="close-btn" onclick="toggleAIPanel()">×</button>
@@ -626,24 +616,24 @@
         
         <div class="ai-chat-body" id="chatBody">
             <div class="chat-msg msg-bot">
-                Marhaban! I am your AI academic advisor. I have analyzed your <strong>Mechanical Engineering</strong> degree plan. How can I help you clear your track today?
+                Marhaban Salem! I have verified your parameters against the official **Mechanical Engineering Model Study Plan (132 Credit Framework)**. How can I assist you with your course alignment today?
             </div>
         </div>
 
         <div class="chips-container">
-            <div class="prompt-chip" onclick="sendPreset('Optimize my Summer 2026 track')">⚡ Optimize Summer 2026</div>
-            <div class="prompt-chip" onclick="sendPreset('Check prerequisites for MECH 305')">🔍 MECH 305 Prereqs</div>
-            <div class="prompt-chip" onclick="sendPreset('Am I on track for my scholarship standing?')">📋 Scholarship Standing</div>
+            <div class="prompt-chip" onclick="sendPreset('Optimize my Summer 2026 track')">⚡ Optimize Summer load</div>
+            <div class="prompt-chip" onclick="sendPreset('Check prerequisites for MECH 305')">🔍 MECH 305 Requirements</div>
+            <div class="prompt-chip" onclick="sendPreset('Verify my current Academic Standing profile')">📋 Audit Credit Status</div>
         </div>
 
         <div class="ai-input-box">
-            <input type="text" id="userInput" placeholder="Ask about degree paths, terms..." onkeypress="handleKeyPress(event)">
+            <input type="text" id="userInput" placeholder="Ask about adding classes, limits, prerequisites..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
 
     <footer>
-        Ellucian Degree Works™ - Enhanced with Project AI Engine Prototype © 2026
+        Ellucian Degree Works™ - Custom AI Integration Framework Verification Engine © 2026
     </footer>
 
     <script>
@@ -667,14 +657,15 @@
             input.value = '';
 
             setTimeout(() => {
-                let reply = "I am processing your structural degree adjustments based on the UAEU catalog configuration rules. Let me double-check that setup.";
+                let lowerText = text.toLowerCase();
+                let reply = "I am mapping your request to the 2025-2026 Bachelor of Science in Mechanical Engineering catalog profile constraints.";
                 
-                if(text.includes('Summer 2026')) {
-                    reply = "Your **GEIE 222** class is registered for Summer 2026. Taking 3 credits keeps your summer load optimal while opening up prerequisite pathways for **MECH 305** and advanced engineering models in Fall 2026!";
-                } else if(text.includes('MECH 305')) {
-                    reply = "Checking requirements for **MECH 305 (Fall 2026)**: System indicators show your current progress in **MATH 130** and your incoming foundational coursework fully clear the entry criteria. You are safe to lock this schedule.";
-                } else if(text.includes('scholarship')) {
-                    reply = "Sponsor check: Your **Academic Standing is Excellent (Good Standing)**. Your current completed credit progression rate aligns perfectly with the standard parameters required to maintain your scholarship.";
+                if (lowerText.includes('add another course') || lowerText.includes('add course') || lowerText.includes('more classes') || lowerText.includes('summer')) {
+                    reply = "According to the official UAEU registration ceiling rules for the **Summer Session**, you are limited to a maximum of **3 to 4 credits**. Since your current registration in **GEIE 222** accounts for 3.0 credits, adding an additional course would violate the credit restriction threshold. I suggest leaving your summer optimized as is.";
+                } else if(lowerText.includes('mech 305') || lowerText.includes('prereq') || lowerText.includes('requirement')) {
+                    reply = "Prerequisite Audit for **MECH 305 (Mechanical Graphics)**: This course requires successful passing marks in your Year 1 curriculum courses. Since you passed **GENG 215** and your math lines, your validation status is fully cleared to unlock this course next term.";
+                } else if(lowerText.includes('standing') || lowerText.includes('academic') || lowerText.includes('audit')) {
+                    reply = "Academic Audit Data: Your cumulative parameter profile reads **Good Standing**. You have successfully planned out of structural roadblocks and your track speed lines up safely with graduation windows.";
                 }
 
                 appendMessage(reply, 'bot');
@@ -684,13 +675,14 @@
         function sendPreset(presetText) {
             appendMessage(presetText, 'user');
             setTimeout(() => {
+                let lowerPreset = presetText.toLowerCase();
                 let reply = "";
-                if(presetText.includes('Summer 2026')) {
-                    reply = "Your **GEIE 222** class is registered for Summer 2026. Taking 3 credits keeps your summer load optimal while opening up prerequisite pathways for **MECH 305** and advanced engineering models in Fall 2026!";
-                } else if(presetText.includes('MECH 305')) {
-                    reply = "Checking requirements for **MECH 305 (Fall 2026)**: System indicators show your current progress in **MATH 130** and your incoming foundational coursework fully clear the entry criteria. You are safe to lock this schedule.";
-                } else if(presetText.includes('scholarship')) {
-                    reply = "Sponsor check: Your **Academic Standing is Excellent (Good Standing)**. Your current completed credit progression rate aligns perfectly with the standard parameters required to maintain your scholarship.";
+                if(lowerPreset.includes('summer')) {
+                    reply = "According to the official UAEU registration ceiling rules for the **Summer Session**, you are limited to a maximum of **3 to 4 credits**. Since your current registration in **GEIE 222** accounts for 3.0 credits, adding an additional course would violate the credit restriction threshold. I suggest leaving your summer optimized as is.";
+                } else if(lowerPreset.includes('mech 305')) {
+                    reply = "Prerequisite Audit for **MECH 305 (Mechanical Graphics)**: This course requires successful passing marks in your Year 1 curriculum courses. Since you passed **GENG 215** and your math lines, your validation status is fully cleared to unlock this course next term.";
+                } else if(lowerPreset.includes('standing') || lowerPreset.includes('academic')) {
+                    reply = "Academic Audit Data: Your cumulative parameter profile reads **Good Standing**. You have successfully planned out of structural roadblocks and your track speed lines up safely with graduation windows.";
                 }
                 appendMessage(reply, 'bot');
             }, 600);
