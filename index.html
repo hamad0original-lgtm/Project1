@@ -461,6 +461,7 @@
 </head>
 <body>
 
+    <!-- NAVBAR HEADER -->
     <header>
         <div class="header-left">
             <div class="logo-box">UAEU</div>
@@ -483,6 +484,7 @@
             <h1>Study Planner</h1>
         </div>
 
+        <!-- PROFILE DATA GRID -->
         <div class="card">
             <div class="student-grid">
                 <div class="info-box">
@@ -517,6 +519,7 @@
         <div class="plan-list-header">Engineering Mechanical (F25)</div>
         
         <div class="term-container">
+            <!-- Fall 2025 -->
             <div class="term-column">
                 <div class="term-header">
                     <div class="term-title">Fall 2025</div>
@@ -541,6 +544,7 @@
                 </div>
             </div>
 
+            <!-- Spring 2026 -->
             <div class="term-column">
                 <div class="term-header">
                     <div class="term-title">Spring 2026</div>
@@ -565,6 +569,7 @@
                 </div>
             </div>
 
+            <!-- Summer 2026 -->
             <div class="term-column">
                 <div class="term-header">
                     <div class="term-title">Summer 2026</div>
@@ -579,6 +584,7 @@
                 </div>
             </div>
 
+            <!-- Fall 2026 -->
             <div class="term-column" id="fall2026Column" style="border: 2px dashed #B0D4FF; background-color: #FDFEFE;">
                 <div class="term-header">
                     <div class="term-title" style="color: #1976D2;">Fall 2026</div>
@@ -605,6 +611,7 @@
         </div>
     </main>
 
+    <!-- --- ADVISOR MODULE PANEL --- -->
     <div class="ai-fab" onclick="toggleAIPanel()">
         <span style="font-size: 24px;">🤖</span>
     </div>
@@ -616,6 +623,7 @@
                 <button class="close-btn" onclick="toggleAIPanel()">×</button>
             </div>
             <div class="api-key-container">
+                <!-- Obscured input password format protects from screen display recording leak -->
                 <input type="password" id="apiKeyInput" placeholder="API Key Loaded" readonly>
             </div>
         </div>
@@ -647,7 +655,6 @@
             document.getElementById('apiKeyInput').value = _p1 + _p2 + _p3;
         };
 
-        let lastSuggestedCourses = [];
         let totalCreditsAdded = 9;
 
         function toggleAIPanel() {
@@ -660,43 +667,47 @@
             }
         }
 
+        // PHYSICAL INJECTION INTERCEPTOR LOOP
         function checkAndExecuteVisualCard(userInputText) {
             const inputClean = userInputText.toLowerCase();
-            
-            if (inputClean.includes('add') || inputClean.includes('yes') || inputClean.includes('sure') || inputClean.includes('ok')) {
-                let courseToInject = "";
-                let titleDesc = "";
+            let courseToInject = "";
+            let titleDesc = "";
 
-                if (lastSuggestedCourses.includes("GESU 121") || inputClean.includes("gesu") || inputClean.includes("121")) {
-                    courseToInject = "GESU 121";
-                    titleDesc = "Sustainability (3.0 cr)";
-                } else if (lastSuggestedCourses.includes("HUMN 102") || inputClean.includes("humn") || inputClean.includes("102")) {
-                    courseToInject = "HUMN 102";
-                    titleDesc = "Humanities (3.0 cr)";
-                } else if (lastSuggestedCourses.includes("ARB 101") || inputClean.includes("arb") || inputClean.includes("101")) {
-                    courseToInject = "ARB 101";
-                    titleDesc = "Arabic Language (3.0 cr)";
-                }
-
-                if (courseToInject) {
-                    const fallColumn = document.getElementById('fall2026Column');
-                    const existingCards = Array.from(fallColumn.querySelectorAll('.course-code')).map(c => c.innerText.trim());
-                    if (existingCards.includes(courseToInject)) return false;
-
-                    const newCourseCard = document.createElement('div');
-                    newCourseCard.className = 'course-card new-addition-effect';
-                    newCourseCard.innerHTML = `
-                        <div class="course-code">${courseToInject}</div>
-                        <div class="course-credits">${titleDesc}</div>
-                        <span class="badge badge-on-track" style="background-color: var(--status-green-bg); color: var(--status-green);">AI Appended</span>
-                    `;
-                    fallColumn.appendChild(newCourseCard);
-
-                    totalCreditsAdded += 3;
-                    document.getElementById('fallCreditsText').innerText = `Credits: ${totalCreditsAdded}`;
-                    return courseToInject;
-                }
+            // Check specifically what the user typed in their input to grab the right class
+            if (inputClean.includes("humn") || inputClean.includes("102")) {
+                courseToInject = "HUMN 102";
+                titleDesc = "Humanities (3.0 cr)";
+            } else if (inputClean.includes("gesu") || inputClean.includes("121")) {
+                courseToInject = "GESU 121";
+                titleDesc = "Sustainability (3.0 cr)";
+            } else if (inputClean.includes("arb") || inputClean.includes("101")) {
+                courseToInject = "ARB 101";
+                titleDesc = "Arabic Language (3.0 cr)";
             }
+
+            // Only inject if a valid course was explicitly mentioned in the user's text
+            if (courseToInject) {
+                const fallColumn = document.getElementById('fall2026Column');
+                
+                // Check if it's already rendered to prevent duplicates
+                const existingCards = Array.from(fallColumn.querySelectorAll('.course-code')).map(c => c.innerText.trim());
+                if (existingCards.includes(courseToInject)) return false;
+
+                const newCourseCard = document.createElement('div');
+                newCourseCard.className = 'course-card new-addition-effect';
+                newCourseCard.innerHTML = `
+                    <div class="course-code">${courseToInject}</div>
+                    <div class="course-credits">${titleDesc}</div>
+                    <span class="badge badge-on-track" style="background-color: var(--status-green-bg); color: var(--status-green);">AI Appended</span>
+                `;
+                fallColumn.appendChild(newCourseCard);
+
+                // Re-render display counter
+                totalCreditsAdded += 3;
+                document.getElementById('fallCreditsText').innerText = `Credits: ${totalCreditsAdded}`;
+                return courseToInject;
+            }
+            
             return false;
         }
 
@@ -717,9 +728,11 @@
                 return;
             }
 
+            // Execute frontend visual changes immediately if the text matches
             const successfullyAdded = checkAndExecuteVisualCard(userText);
             appendMessage("⏳ Thinking...", "bot", "loadingMsg");
 
+            // STRUCTURAL SYSTEM PROMPT CONTEXT TUNING
             let systemPrompt = `You are an intelligent UAEU Academic Advisor inside Degree Works. 
             The student is Salem Ahmed, majoring in Bachelor of Science in Mechanical Engineering (132 credits model framework).
             Current terms status:
@@ -758,11 +771,6 @@
                 if (data.choices && data.choices[0]) {
                     const aiReplyText = data.choices[0].message.content;
                     appendMessage(aiReplyText, "bot");
-
-                    lastSuggestedCourses = [];
-                    if (aiReplyText.includes("GESU 121")) lastSuggestedCourses.push("GESU 121");
-                    if (aiReplyText.includes("HUMN 102")) lastSuggestedCourses.push("HUMN 102");
-                    if (aiReplyText.includes("ARB 101")) lastSuggestedCourses.push("ARB 101");
                 } else {
                     appendMessage("Error parsing context validation lines. Verify usage credits.", "bot");
                 }
